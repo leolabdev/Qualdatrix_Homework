@@ -1,8 +1,9 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 import { Course } from './course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
+import { DuplicateFieldException } from '../common/exceptions/duplicate-field.exception';
 
 @Injectable()
 export class CoursesService {
@@ -29,10 +30,11 @@ export class CoursesService {
       return await this.coursesRepository.save(course);
     } catch (error) {
       if (error instanceof QueryFailedError) {
-        // PostgreSQL error code for unique violation is '23505'
         const pgError = error as any;
-        if (pgError.detail.includes('title')) {
-          throw new ConflictException(`Course with title "${createCourseDto.title}" already exists`);
+        if (pgError.code === '23505') { // PostgreSQL unique violation code
+          if (pgError.constraint === 'UQ_COURSE_TITLE') {
+            throw new DuplicateFieldException('title', createCourseDto.title);
+          }
         }
       }
       throw error;

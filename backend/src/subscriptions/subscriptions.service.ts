@@ -36,7 +36,18 @@ export class SubscriptionsService {
       where: { learnerId },
       relations: ['course'],
     });
-
     return subscriptions.map(subscription => subscription.course);
   }
+
+  async unsubscribe(learnerId: number, courseId: number): Promise<void> {
+    const subscription = await this.subscriptionsRepository.findOne({
+      where: { learnerId, course: { id: courseId } },
+    });
+    if (!subscription) {
+      throw new NotFoundException(`Subscription for learner with ID ${learnerId} and course ID ${courseId} not found`);
+    }
+    await this.subscriptionsRepository.delete(subscription.id);
+  }
+
+
 }

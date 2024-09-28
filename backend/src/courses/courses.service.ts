@@ -20,7 +20,10 @@ export class CoursesService {
   }
 
   async findOne(id: number): Promise<Course> {
-    const course = await this.coursesRepository.findOneBy({id});
+    const course = await this.coursesRepository.findOne({
+      where: { id },
+      relations: ['subscriptions'],
+    });
     if (!course) {
       throw new NotFoundException(`Course with ID ${id} not found`);
     }
@@ -76,8 +79,5 @@ export class CoursesService {
       throw new NotFoundException(`Course with ID ${id} not found`);
     }
   }
-
-
-
 
 }

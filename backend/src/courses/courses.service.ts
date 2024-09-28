@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 import { Course } from './course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
 
@@ -25,6 +25,18 @@ export class CoursesService {
 
   async create(createCourseDto: CreateCourseDto): Promise<Course> {
     const course = this.coursesRepository.create(createCourseDto);
-    return this.coursesRepository.save(course);
+    try {
+      return await this.coursesRepository.save(course);
+    } catch (error) {
+      if (error instanceof QueryFailedError) {
+        // PostgreSQL error code for unique violation is '23505'
+        const pgError = error as any;
+        if (pgError.detail.includes('title')) {
+          throw new ConflictException(`Course with title "${createCourseDto.title}" already exists`);
+        }
+      }
+      throw error;
+    }
   }
+
 }

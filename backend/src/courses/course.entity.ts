@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany } from 'typeorm';
+import { Subscription } from '../subscriptions/subscription.entity';
 
 /**
  * Represents a Course entity in the database.
@@ -31,4 +32,8 @@ export class Course {
 
   @Column()
   durationMinutes: number;
+
+
+  @OneToMany(() => Subscription, subscription => subscription.course)
+  subscriptions: Subscription[];
 }

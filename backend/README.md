@@ -1,8 +1,3 @@
-
-## Description
-
-Homework
-
 ## Project setup
 
 ```bash

@@ -5,6 +5,7 @@ import { Course } from './course.entity';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { DuplicateFieldException } from '../common/exceptions/duplicate-field.exception';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { CourseResponseBasicDto } from './dto/course-response-basic.dto';
 
 @Injectable()
 export class CoursesService {
@@ -30,7 +31,7 @@ export class CoursesService {
     return course;
   }
 
-  async create(createCourseDto: CreateCourseDto): Promise<Course> {
+  async create(createCourseDto: CreateCourseDto): Promise<CourseResponseBasicDto> {
     const course = this.coursesRepository.create(createCourseDto);
     try {
       return await this.coursesRepository.save(course);

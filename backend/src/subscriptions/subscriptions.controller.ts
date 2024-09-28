@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
 import { SubscriptionsService } from './subscriptions.service';
 
 @Controller('subscriptions')
@@ -14,4 +14,10 @@ export class SubscriptionsController {
   async findSubscribedCourses(@Param('learnerId') learnerId: number) {
     return this.subscriptionsService.findSubscribedCourses(learnerId);
   }
+
+  @Delete()
+  async unsubscribe(@Body('learnerId') learnerId: number, @Body('courseId') courseId: number): Promise<void> {
+    return this.subscriptionsService.unsubscribe(learnerId, courseId);
+  }
+
 }

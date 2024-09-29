@@ -4,7 +4,7 @@ import SubscribedCourses from '../components/SubscribedCourses';
 import { useCourses } from '../hooks/useCourses';
 import { useSubscribedCourses } from '../hooks/useSubscribedCourses';
 import { useSubscribe } from '../hooks/useSubscribe';
-import { useUnsubscribe } from '../hooks/useUnsubscribe'; // Новый хук
+import { useUnsubscribe } from '../hooks/useUnsubscribe';
 
 function CoursePage() {
   const [learnerId, setLearnerId] = useState<number | null>(null);

@@ -15,12 +15,18 @@ function CoursePage() {
   const { allCourses, isLoading: isLoadingCourses, error: coursesError, refetchCourses } = useCourses();
   const {
     subscribedCourses,
-    isLoading: isLoadingSubscriptions,
+    // isLoading: isLoadingSubscriptions,
     error: subscriptionsError,
     refetchSubscribedCourses,
   } = useSubscribedCourses(learnerId);
-  const { handleSubscribe, isLoading: isLoadingSubscribe, error: subscribeError } = useSubscribe(learnerId, refetchSubscribedCourses);
-  const { handleUnsubscribe, isLoading: isLoadingUnsubscribe, error: unsubscribeError } = useUnsubscribe(learnerId, refetchSubscribedCourses);
+  const { handleSubscribe,
+    // isLoading: isLoadingSubscribe,
+    error: subscribeError
+  } = useSubscribe(learnerId, refetchSubscribedCourses);
+  const { handleUnsubscribe,
+    // isLoading: isLoadingUnsubscribe,
+    error: unsubscribeError
+  } = useUnsubscribe(learnerId, refetchSubscribedCourses);
 
   const {
     handleDragStart,

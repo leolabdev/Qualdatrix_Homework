@@ -1,4 +1,4 @@
-import { apiService } from '../ApiService';
+import { apiService } from '../api/ApiService.ts';
 
 export function useDeleteCourse(refetchCourses: () => void) {
   const handleDeleteCourse = async (courseId: number) => {

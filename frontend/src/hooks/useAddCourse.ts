@@ -1,4 +1,4 @@
-import { apiService } from '../ApiService';
+import { apiService } from '../api/ApiService.ts';
 
 export function useAddCourse(refetchCourses: () => void) {
   const handleAddCourse = async (course: Omit<Course, 'id'>) => {

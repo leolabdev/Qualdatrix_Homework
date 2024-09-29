@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiService } from '../ApiService.ts';
+import { apiService } from '../api/ApiService.ts';
 
 export function useSubscribedCourses(learnerId: number | null) {
   const [subscribedCourses, setSubscribedCourses] = useState<Course[]>([]);

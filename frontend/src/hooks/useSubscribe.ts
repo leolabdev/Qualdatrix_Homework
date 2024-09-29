@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { apiService } from '../ApiService.ts';
+import { apiService } from '../api/ApiService.ts';
 
 export function useSubscribe(learnerId: number | null, refetchSubscribedCourses: () => void) {
   const [isLoading, setIsLoading] = useState<boolean>(false);

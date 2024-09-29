@@ -42,6 +42,7 @@ function CoursePage() {
       ) : (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
           <div style={{ width: '45%' }}>
+            <h2>Available Courses</h2>
             <CourseList
               allCourses={allCourses}
               subscribedCourses={subscribedCourses}

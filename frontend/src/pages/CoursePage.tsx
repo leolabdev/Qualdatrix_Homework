@@ -4,6 +4,7 @@ import SubscribedCourses from '../components/SubscribedCourses';
 import { useCourses } from '../hooks/useCourses';
 import { useSubscribedCourses } from '../hooks/useSubscribedCourses';
 import { useSubscribe } from '../hooks/useSubscribe';
+import { useUnsubscribe } from '../hooks/useUnsubscribe'; // Новый хук
 
 function CoursePage() {
   const [learnerId, setLearnerId] = useState<number | null>(null);
@@ -15,14 +16,17 @@ function CoursePage() {
     refetchSubscribedCourses,
   } = useSubscribedCourses(learnerId);
   const { handleSubscribe, isLoading: isLoadingSubscribe, error: subscribeError } = useSubscribe(learnerId, refetchSubscribedCourses);
+  const { handleUnsubscribe, isLoading: isLoadingUnsubscribe, error: unsubscribeError } = useUnsubscribe(learnerId, refetchSubscribedCourses); // Используем хук отписки
 
   return (
     <div>
       <h1>Course Subscription</h1>
 
+      {/* Ошибки */}
       {coursesError && <p style={{ color: 'red' }}>{coursesError}</p>}
       {subscriptionsError && <p style={{ color: 'red' }}>{subscriptionsError}</p>}
       {subscribeError && <p style={{ color: 'red' }}>{subscribeError}</p>}
+      {unsubscribeError && <p style={{ color: 'red' }}>{unsubscribeError}</p>}
 
       <div>
         <label htmlFor="learnerId">Enter your learner ID: </label>
@@ -34,7 +38,7 @@ function CoursePage() {
         />
       </div>
 
-      {(isLoadingCourses || isLoadingSubscriptions || isLoadingSubscribe) ? (
+      {(isLoadingCourses || isLoadingSubscriptions || isLoadingSubscribe || isLoadingUnsubscribe) ? (
         <p>Loading...</p>
       ) : (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
@@ -48,7 +52,10 @@ function CoursePage() {
           <div style={{ width: '45%' }}>
             <h2>Subscribed Courses</h2>
             {learnerId ? (
-              <SubscribedCourses subscribedCourses={subscribedCourses} />
+              <SubscribedCourses
+                subscribedCourses={subscribedCourses}
+                onUnsubscribe={handleUnsubscribe}
+              />
             ) : (
               <p>Please enter your learner ID to view subscribed courses.</p>
             )}
@@ -60,3 +67,4 @@ function CoursePage() {
 }
 
 export default CoursePage;
+

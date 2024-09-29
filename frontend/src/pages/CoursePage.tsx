@@ -6,10 +6,13 @@ import { useSubscribedCourses } from '../hooks/useSubscribedCourses';
 import { useSubscribe } from '../hooks/useSubscribe';
 import { useUnsubscribe } from '../hooks/useUnsubscribe';
 import { useDragAndDropSubscription } from '../hooks/useDragAndDropSubscription';
+import AddCourseForm from '../components/AddCourseForm.tsx';
+import { useAddCourse } from '../hooks/useAddCourse.ts';
+import { useDeleteCourse } from '../hooks/useDeleteCourse.ts';
 
 function CoursePage() {
   const [learnerId, setLearnerId] = useState<number | null>(null);
-  const { allCourses, isLoading: isLoadingCourses, error: coursesError } = useCourses();
+  const { allCourses, isLoading: isLoadingCourses, error: coursesError, refetchCourses } = useCourses();
   const {
     subscribedCourses,
     isLoading: isLoadingSubscriptions,
@@ -26,9 +29,19 @@ function CoursePage() {
     handleDragOver,
   } = useDragAndDropSubscription(learnerId, refetchSubscribedCourses);
 
+  const { handleAddCourse } = useAddCourse(refetchCourses);
+  const { handleDeleteCourse } = useDeleteCourse(refetchCourses);
+
+
   return (
     <div>
       <h1>Course Subscription</h1>
+
+      <AddCourseForm onAddCourse={handleAddCourse} />
+
+      <div style={{
+        marginTop: "30px"
+      }}></div>
 
       {coursesError && <p style={{ color: 'red' }}>{coursesError}</p>}
       {subscriptionsError && <p style={{ color: 'red' }}>{subscriptionsError}</p>}
@@ -60,6 +73,7 @@ function CoursePage() {
               subscribedCourses={subscribedCourses}
               onSubscribe={handleSubscribe}
               onDragStart={handleDragStart}
+              onDeleteCourse={handleDeleteCourse}
             />
           </div>
 

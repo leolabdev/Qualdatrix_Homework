@@ -54,6 +54,34 @@ class ApiService {
     }
   }
 
+  // Add a new course
+  async addCourse(course: Omit<Course, 'id'>): Promise<Course> {
+    const response = await fetch(`${this.baseUrl}/courses`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(course),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add course');
+    }
+
+    return response.json();
+  }
+
+  // Delete a course
+  async deleteCourse(courseId: number): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/courses/${courseId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete course');
+    }
+  }
+
 
 }
 

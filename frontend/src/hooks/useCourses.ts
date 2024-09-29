@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { apiService } from '../ApiService.ts';
+import { apiService } from '../ApiService';
 
 export function useCourses() {
   const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchCourses = () => {
     setIsLoading(true);
     setError(null);
     apiService.fetchAllCourses()
@@ -16,7 +16,11 @@ export function useCourses() {
         setError('Failed to fetch courses');
       })
       .finally(() => setIsLoading(false));
+  };
+
+  useEffect(() => {
+    fetchCourses();
   }, []);
 
-  return { allCourses, isLoading, error };
+  return { allCourses, isLoading, error, refetchCourses: fetchCourses };
 }

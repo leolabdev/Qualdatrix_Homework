@@ -1,31 +1,28 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import CourseList from '../components/CourseList';
 import SubscribedCourses from '../components/SubscribedCourses';
+import { useCourses } from '../hooks/useCourses';
+import { useSubscribedCourses } from '../hooks/useSubscribedCourses';
+import { useSubscribe } from '../hooks/useSubscribe';
 
-const CoursePage: FC = () => {
+function CoursePage() {
   const [learnerId, setLearnerId] = useState<number | null>(null);
-
-  const handleSubscribe = (courseId: number) => {
-    if (learnerId) {
-      fetch('http://localhost:3001/subscriptions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ learnerId, courseId }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Subscription created:', data);
-        });
-    } else {
-      alert('Please enter a valid learner ID');
-    }
-  };
+  const { allCourses, isLoading: isLoadingCourses, error: coursesError } = useCourses();
+  const {
+    subscribedCourses,
+    isLoading: isLoadingSubscriptions,
+    error: subscriptionsError,
+    refetchSubscribedCourses,
+  } = useSubscribedCourses(learnerId);
+  const { handleSubscribe, isLoading: isLoadingSubscribe, error: subscribeError } = useSubscribe(learnerId, refetchSubscribedCourses);
 
   return (
     <div>
       <h1>Course Subscription</h1>
+      {coursesError && <p style={{ color: 'red' }}>{coursesError}</p>}
+      {subscriptionsError && <p style={{ color: 'red' }}>{subscriptionsError}</p>}
+      {subscribeError && <p style={{ color: 'red' }}>{subscribeError}</p>}
+
       <div>
         <label htmlFor="learnerId">Enter your learner ID: </label>
         <input
@@ -35,16 +32,24 @@ const CoursePage: FC = () => {
         />
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-        <div style={{ width: '45%' }}>
-          <CourseList onSubscribe={handleSubscribe} />
+      {(isLoadingCourses || isLoadingSubscriptions || isLoadingSubscribe) ? (
+        <p>Loading...</p>
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+          <div style={{ width: '45%' }}>
+            <CourseList
+              allCourses={allCourses}
+              subscribedCourses={subscribedCourses}
+              onSubscribe={handleSubscribe}
+            />
+          </div>
+          <div style={{ width: '45%' }}>
+            {learnerId && <SubscribedCourses subscribedCourses={subscribedCourses} />}
+          </div>
         </div>
-        <div style={{ width: '45%' }}>
-          {learnerId && <SubscribedCourses learnerId={learnerId} />}
-        </div>
-      </div>
+      )}
     </div>
   );
-};
+}
 
 export default CoursePage;

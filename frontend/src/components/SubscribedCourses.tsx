@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import React from 'react';
 
 interface Course {
   id: number;
@@ -7,22 +7,16 @@ interface Course {
   durationMinutes: number;
 }
 
-const SubscribedCourses: FC<{ learnerId: number }> = ({ learnerId }) => {
-  const [courses, setCourses] = useState<Course[]>([]);
+interface SubscribedCoursesProps {
+  subscribedCourses: Course[];
+}
 
-  useEffect(() => {
-    if (learnerId) {
-      fetch(`http://localhost:3001/subscriptions/${learnerId}`)
-        .then((response) => response.json())
-        .then((data) => setCourses(data));
-    }
-  }, [learnerId]);
-
+const SubscribedCourses: React.FC<SubscribedCoursesProps> = ({ subscribedCourses }) => {
   return (
     <div>
       <h2>Subscribed Courses</h2>
       <ul>
-        {courses.map((course) => (
+        {subscribedCourses.map((course) => (
           <li key={course.id}>
             <h3>{course.title}</h3>
             <p>{course.description}</p>

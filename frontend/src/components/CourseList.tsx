@@ -21,9 +21,8 @@ const CourseList: React.FC<CourseListProps> = ({ allCourses, subscribedCourses, 
   return (
     <div>
       <h2>Available Courses</h2>
-      <ul>
         {allCourses.map((course) => (
-          <li key={course.id}>
+          <div key={course.id}>
             <h3>{course.title}</h3>
             <p>{course.description}</p>
             <p>Duration: {course.durationMinutes} minutes</p>
@@ -32,9 +31,8 @@ const CourseList: React.FC<CourseListProps> = ({ allCourses, subscribedCourses, 
             ) : (
               <span>Already Subscribed</span>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
     </div>
   );
 };

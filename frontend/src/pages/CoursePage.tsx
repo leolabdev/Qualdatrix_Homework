@@ -19,6 +19,7 @@ function CoursePage() {
   return (
     <div>
       <h1>Course Subscription</h1>
+
       {coursesError && <p style={{ color: 'red' }}>{coursesError}</p>}
       {subscriptionsError && <p style={{ color: 'red' }}>{subscriptionsError}</p>}
       {subscribeError && <p style={{ color: 'red' }}>{subscribeError}</p>}
@@ -43,8 +44,14 @@ function CoursePage() {
               onSubscribe={handleSubscribe}
             />
           </div>
+
           <div style={{ width: '45%' }}>
-            {learnerId && <SubscribedCourses subscribedCourses={subscribedCourses} />}
+            <h2>Subscribed Courses</h2>
+            {learnerId ? (
+              <SubscribedCourses subscribedCourses={subscribedCourses} />
+            ) : (
+              <p>Please enter your learner ID to view subscribed courses.</p>
+            )}
           </div>
         </div>
       )}

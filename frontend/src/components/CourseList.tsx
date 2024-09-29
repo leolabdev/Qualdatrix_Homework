@@ -1,3 +1,5 @@
+import CourseCard from './CourseCard.tsx';
+
 interface CourseListProps {
   allCourses: Course[];
   subscribedCourses: Course[];
@@ -19,21 +21,28 @@ const CourseList  = (props: CourseListProps) => {
 
   return (
     <div>
-      <h2>Available Courses</h2>
       {allCourses.map((course) => (
-        <div key={course.id}>
-          <h3>{course.title}</h3>
-          <p>{course.description}</p>
-          <p>Duration: {course.durationMinutes} minutes</p>
-          {!isSubscribed(course.id) ? (
-            <button onClick={() => onSubscribe(course.id)}>Subscribe</button>
-          ) : (
-            <span>Already Subscribed</span>
-          )}
-        </div>
+        <CourseCard
+          key={course.id}
+          course={course}
+          buttonProps={{
+            text: isSubscribed(course.id) ? 'Already Subscribed' : 'Subscribe',
+            onClick: () => {
+              if (!isSubscribed(course.id)) {
+                onSubscribe(course.id);
+              }
+            },
+            style: {
+              backgroundColor: isSubscribed(course.id) ? '#d3d3d3' : '#4CAF50',
+              color: 'white',
+            },
+            disabled: isSubscribed(course.id)
+          }}
+        />
       ))}
     </div>
   );
+
 };
 
 export default CourseList;

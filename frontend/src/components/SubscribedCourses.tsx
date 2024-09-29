@@ -1,3 +1,5 @@
+import CourseCard from './CourseCard.tsx';
+
 interface SubscribedCoursesProps {
   subscribedCourses: Course[];
   onUnsubscribe: (courseId: number) => void;
@@ -9,12 +11,18 @@ const SubscribedCourses = (props: SubscribedCoursesProps) => {
   return (
     <div>
       {subscribedCourses.map((course) => (
-        <div key={course.id}>
-          <h3>{course.title}</h3>
-          <p>{course.description}</p>
-          <p>Duration: {course.durationMinutes} minutes</p>
-          <button onClick={() => onUnsubscribe(course.id)}>Unsubscribe</button>
-        </div>
+        <CourseCard
+          key={course.id}
+          course={course}
+          buttonProps={{
+            text: 'Unsubscribe',
+            onClick: () => onUnsubscribe(course.id),
+            style: {
+              backgroundColor: '#FF6347',
+              color: 'white',
+            },
+          }}
+        />
       ))}
     </div>
   );

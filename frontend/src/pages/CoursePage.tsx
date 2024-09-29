@@ -22,7 +22,6 @@ function CoursePage() {
     <div>
       <h1>Course Subscription</h1>
 
-      {/* Ошибки */}
       {coursesError && <p style={{ color: 'red' }}>{coursesError}</p>}
       {subscriptionsError && <p style={{ color: 'red' }}>{subscriptionsError}</p>}
       {subscribeError && <p style={{ color: 'red' }}>{subscribeError}</p>}

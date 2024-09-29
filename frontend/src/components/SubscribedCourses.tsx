@@ -1,10 +1,10 @@
-import React from 'react';
-
 interface SubscribedCoursesProps {
   subscribedCourses: Course[];
 }
 
-const SubscribedCourses: React.FC<SubscribedCoursesProps> = ({ subscribedCourses }) => {
+const SubscribedCourses = (props : SubscribedCoursesProps) => {
+  const { subscribedCourses } = props;
+
   return (
     <div>
         {subscribedCourses.map((course) => (

@@ -1,12 +1,5 @@
 import React from 'react';
 
-interface Course {
-  id: number;
-  title: string;
-  description: string;
-  durationMinutes: number;
-}
-
 interface SubscribedCoursesProps {
   subscribedCourses: Course[];
 }

@@ -29,7 +29,8 @@ function CoursePage() {
         <input
           type="number"
           id="learnerId"
-          onChange={(e) => setLearnerId(parseInt(e.target.value, 10))}
+          value={learnerId || ''}
+          onChange={(e) => setLearnerId(e.target.value ? parseInt(e.target.value, 10) : null)}
         />
       </div>
 
@@ -44,7 +45,6 @@ function CoursePage() {
               onSubscribe={handleSubscribe}
             />
           </div>
-
           <div style={{ width: '45%' }}>
             <h2>Subscribed Courses</h2>
             {learnerId ? (

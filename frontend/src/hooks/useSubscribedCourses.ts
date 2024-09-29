@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Course } from '../components/CourseList';
 import { apiService } from '../ApiService.ts';
 
 export function useSubscribedCourses(learnerId: number | null) {
@@ -21,7 +20,11 @@ export function useSubscribedCourses(learnerId: number | null) {
   };
 
   useEffect(() => {
-    refetchSubscribedCourses();
+    if (learnerId === null) {
+      setSubscribedCourses([]);
+    } else {
+      refetchSubscribedCourses();
+    }
   }, [learnerId]);
 
   return { subscribedCourses, isLoading, error, refetchSubscribedCourses };

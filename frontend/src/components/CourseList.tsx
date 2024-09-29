@@ -1,11 +1,11 @@
 import React from 'react';
 
-export interface Course {
-  id: number;
-  title: string;
-  description: string;
-  durationMinutes: number;
-}
+// export interface Course {
+//   id: number;
+//   title: string;
+//   description: string;
+//   durationMinutes: number;
+// }
 
 export interface CourseListProps {
   allCourses: Course[];
@@ -21,18 +21,18 @@ const CourseList: React.FC<CourseListProps> = ({ allCourses, subscribedCourses, 
   return (
     <div>
       <h2>Available Courses</h2>
-        {allCourses.map((course) => (
-          <div key={course.id}>
-            <h3>{course.title}</h3>
-            <p>{course.description}</p>
-            <p>Duration: {course.durationMinutes} minutes</p>
-            {!isSubscribed(course.id) ? (
-              <button onClick={() => onSubscribe(course.id)}>Subscribe</button>
-            ) : (
-              <span>Already Subscribed</span>
-            )}
-          </div>
-        ))}
+      {allCourses.map((course) => (
+        <div key={course.id}>
+          <h3>{course.title}</h3>
+          <p>{course.description}</p>
+          <p>Duration: {course.durationMinutes} minutes</p>
+          {!isSubscribed(course.id) ? (
+            <button onClick={() => onSubscribe(course.id)}>Subscribe</button>
+          ) : (
+            <span>Already Subscribed</span>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

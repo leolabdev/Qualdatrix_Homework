@@ -1,14 +1,7 @@
-export interface Course {
-  id: number;
-  title: string;
-  description: string;
-  durationMinutes: number;
-}
-
 const API_URL = import.meta.env.VITE_API_URL;
 
 class ApiService {
-  private baseUrl: string;
+  private readonly baseUrl: string;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;

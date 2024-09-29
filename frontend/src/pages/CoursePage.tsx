@@ -58,7 +58,7 @@ function CoursePage() {
         />
       </div>
 
-      {(isLoadingCourses || isLoadingSubscriptions || isLoadingSubscribe || isLoadingUnsubscribe) ? (
+      {(isLoadingCourses) ? (
         <p>Loading...</p>
       ) : (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>

@@ -1,13 +1,6 @@
 import React from 'react';
 
-// export interface Course {
-//   id: number;
-//   title: string;
-//   description: string;
-//   durationMinutes: number;
-// }
-
-export interface CourseListProps {
+interface CourseListProps {
   allCourses: Course[];
   subscribedCourses: Course[];
   onSubscribe: (courseId: number) => void;

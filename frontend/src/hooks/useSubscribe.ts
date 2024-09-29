@@ -8,6 +8,7 @@ export function useSubscribe(learnerId: number | null, refetchSubscribedCourses:
   const handleSubscribe = (courseId: number) => {
     if (learnerId) {
       setIsLoading(true);
+      setError(null);
       apiService.subscribeToCourse(learnerId, courseId)
         .then(() => {
           refetchSubscribedCourses();

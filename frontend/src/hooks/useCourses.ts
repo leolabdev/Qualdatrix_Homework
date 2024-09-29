@@ -8,6 +8,7 @@ export function useCourses() {
 
   useEffect(() => {
     setIsLoading(true);
+    setError(null);
     apiService.fetchAllCourses()
       .then(setAllCourses)
       .catch((err) => {

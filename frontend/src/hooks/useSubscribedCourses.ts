@@ -9,6 +9,7 @@ export function useSubscribedCourses(learnerId: number | null) {
   const refetchSubscribedCourses = () => {
     if (learnerId) {
       setIsLoading(true);
+      setError(null);
       apiService.fetchSubscribedCourses(learnerId)
         .then(setSubscribedCourses)
         .catch((err) => {

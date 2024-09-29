@@ -12,6 +12,7 @@ export function useUnsubscribe(learnerId: number | null, refetchSubscribedCourse
     }
 
     setIsLoading(true);
+    setError(null);
     apiService
       .unsubscribeFromCourse(learnerId, courseId)
       .then(() => {

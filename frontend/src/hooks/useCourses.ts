@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { apiService } from '../ApiService.ts';
-import { Course } from '../components/CourseList';
 
 export function useCourses() {
   const [allCourses, setAllCourses] = useState<Course[]>([]);

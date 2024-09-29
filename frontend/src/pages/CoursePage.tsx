@@ -5,6 +5,7 @@ import { useCourses } from '../hooks/useCourses';
 import { useSubscribedCourses } from '../hooks/useSubscribedCourses';
 import { useSubscribe } from '../hooks/useSubscribe';
 import { useUnsubscribe } from '../hooks/useUnsubscribe';
+import { useDragAndDropSubscription } from '../hooks/useDragAndDropSubscription';
 
 function CoursePage() {
   const [learnerId, setLearnerId] = useState<number | null>(null);
@@ -17,6 +18,13 @@ function CoursePage() {
   } = useSubscribedCourses(learnerId);
   const { handleSubscribe, isLoading: isLoadingSubscribe, error: subscribeError } = useSubscribe(learnerId, refetchSubscribedCourses);
   const { handleUnsubscribe, isLoading: isLoadingUnsubscribe, error: unsubscribeError } = useUnsubscribe(learnerId, refetchSubscribedCourses);
+
+  const {
+    handleDragStart,
+    handleDropToSubscribe,
+    handleDropToUnsubscribe,
+    handleDragOver,
+  } = useDragAndDropSubscription(learnerId, refetchSubscribedCourses);
 
   return (
     <div>
@@ -41,20 +49,31 @@ function CoursePage() {
         <p>Loading...</p>
       ) : (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-          <div style={{ width: '45%' }}>
+          <div
+            style={{ width: '45%', backgroundColor: '#f0f0f0', padding: '10px' }}
+            onDragOver={handleDragOver}
+            onDrop={handleDropToUnsubscribe}
+          >
             <h2>Available Courses</h2>
             <CourseList
               allCourses={allCourses}
               subscribedCourses={subscribedCourses}
               onSubscribe={handleSubscribe}
+              onDragStart={handleDragStart}
             />
           </div>
-          <div style={{ width: '45%' }}>
+
+          <div
+            style={{ width: '45%', backgroundColor: '#e0e0e0', padding: '10px' }}
+            onDragOver={handleDragOver}
+            onDrop={handleDropToSubscribe}
+          >
             <h2>Subscribed Courses</h2>
             {learnerId ? (
               <SubscribedCourses
                 subscribedCourses={subscribedCourses}
                 onUnsubscribe={handleUnsubscribe}
+                onDragStart={handleDragStart}
               />
             ) : (
               <p>Please enter your learner ID to view subscribed courses.</p>
@@ -67,4 +86,3 @@ function CoursePage() {
 }
 
 export default CoursePage;
-

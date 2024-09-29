@@ -1,19 +1,15 @@
 import CourseCard from './CourseCard.tsx';
+import { DragEvent } from 'react';
 
 interface CourseListProps {
   allCourses: Course[];
   subscribedCourses: Course[];
   onSubscribe: (courseId: number) => void;
+  onDragStart?: (e: React.DragEvent<HTMLDivElement>, course: Course) => void;
 }
 
-const CourseList  = (props: CourseListProps) => {
-
-  const {
-    subscribedCourses,
-    onSubscribe,
-    allCourses
-  } = props;
-
+const CourseList = (props: CourseListProps) => {
+  const { subscribedCourses, onSubscribe, allCourses, onDragStart } = props;
 
   const isSubscribed = (courseId: number) => {
     return subscribedCourses.some((course) => course.id === courseId);
@@ -36,13 +32,17 @@ const CourseList  = (props: CourseListProps) => {
               backgroundColor: isSubscribed(course.id) ? '#d3d3d3' : '#4CAF50',
               color: 'white',
             },
-            disabled: isSubscribed(course.id)
+            disabled: isSubscribed(course.id),
+          }}
+          dragProps={{
+            draggable: true,
+            onDragStart: onDragStart ? (e: DragEvent<HTMLDivElement>) => onDragStart(e, course) : undefined,
           }}
         />
       ))}
     </div>
   );
-
 };
 
 export default CourseList;
+

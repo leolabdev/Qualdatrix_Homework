@@ -39,6 +39,22 @@ class ApiService {
       throw new Error('Failed to subscribe to course');
     }
   }
+
+  async unsubscribeFromCourse(learnerId: number, courseId: number): Promise<void> {
+    const response = await fetch(`${this.baseUrl}/subscriptions`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ learnerId, courseId }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to unsubscribe from course');
+    }
+  }
+
+
 }
 
 export const apiService = new ApiService(API_URL);

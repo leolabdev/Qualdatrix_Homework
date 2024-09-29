@@ -19,7 +19,7 @@ export function useDragAndDropSubscription(learnerId: number | null, refetchSubs
       return;
     }
 
-    if (draggedCourse && learnerId) {
+    if (draggedCourse) {
       handleSubscribe(draggedCourse.id);
       setDraggedCourse(null);
     }

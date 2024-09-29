@@ -12,12 +12,19 @@ export function useDragAndDropSubscription(learnerId: number | null, refetchSubs
     setDraggedCourse(course);
   };
 
+
   const handleDropToSubscribe = () => {
+    if (!learnerId) {
+      alert('Please enter a valid learner ID');
+      return;
+    }
+
     if (draggedCourse && learnerId) {
       handleSubscribe(draggedCourse.id);
       setDraggedCourse(null);
     }
   };
+
 
   const handleDropToUnsubscribe = () => {
     if (draggedCourse && learnerId) {

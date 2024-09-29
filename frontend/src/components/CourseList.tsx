@@ -1,12 +1,18 @@
-import React from 'react';
-
 interface CourseListProps {
   allCourses: Course[];
   subscribedCourses: Course[];
   onSubscribe: (courseId: number) => void;
 }
 
-const CourseList: React.FC<CourseListProps> = ({ allCourses, subscribedCourses, onSubscribe }) => {
+const CourseList  = (props: CourseListProps) => {
+
+  const {
+    subscribedCourses,
+    onSubscribe,
+    allCourses
+  } = props;
+
+
   const isSubscribed = (courseId: number) => {
     return subscribedCourses.some((course) => course.id === courseId);
   };

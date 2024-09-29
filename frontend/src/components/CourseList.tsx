@@ -1,31 +1,37 @@
-import { FC, useEffect, useState } from 'react';
+import React from 'react';
 
-interface Course {
+export interface Course {
   id: number;
   title: string;
   description: string;
   durationMinutes: number;
 }
 
-const CourseList: FC<{ onSubscribe: (courseId: number) => void }> = ({ onSubscribe }) => {
-  const [courses, setCourses] = useState<Course[]>([]);
+export interface CourseListProps {
+  allCourses: Course[];
+  subscribedCourses: Course[];
+  onSubscribe: (courseId: number) => void;
+}
 
-  useEffect(() => {
-    fetch('http://localhost:3001/courses')
-      .then((response) => response.json())
-      .then((data) => setCourses(data));
-  }, []);
+const CourseList: React.FC<CourseListProps> = ({ allCourses, subscribedCourses, onSubscribe }) => {
+  const isSubscribed = (courseId: number) => {
+    return subscribedCourses.some((course) => course.id === courseId);
+  };
 
   return (
     <div>
       <h2>Available Courses</h2>
       <ul>
-        {courses.map((course) => (
+        {allCourses.map((course) => (
           <li key={course.id}>
             <h3>{course.title}</h3>
             <p>{course.description}</p>
             <p>Duration: {course.durationMinutes} minutes</p>
-            <button onClick={() => onSubscribe(course.id)}>Subscribe</button>
+            {!isSubscribed(course.id) ? (
+              <button onClick={() => onSubscribe(course.id)}>Subscribe</button>
+            ) : (
+              <span>Already Subscribed</span>
+            )}
           </li>
         ))}
       </ul>

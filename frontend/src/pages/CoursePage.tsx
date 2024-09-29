@@ -16,7 +16,7 @@ function CoursePage() {
     refetchSubscribedCourses,
   } = useSubscribedCourses(learnerId);
   const { handleSubscribe, isLoading: isLoadingSubscribe, error: subscribeError } = useSubscribe(learnerId, refetchSubscribedCourses);
-  const { handleUnsubscribe, isLoading: isLoadingUnsubscribe, error: unsubscribeError } = useUnsubscribe(learnerId, refetchSubscribedCourses); // Используем хук отписки
+  const { handleUnsubscribe, isLoading: isLoadingUnsubscribe, error: unsubscribeError } = useUnsubscribe(learnerId, refetchSubscribedCourses);
 
   return (
     <div>

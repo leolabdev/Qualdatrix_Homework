@@ -56,8 +56,7 @@ http://localhost:3001/swagger
 ```
 
 
-### If you want you can also run integrations tests, but turn off first the running application  (not db)
+### If you want you can also run integrations tests, but turn off first the running application  (not db) and run the command:
 ```bash
-# watch mode
 $ npm run test:e2e
 ```
